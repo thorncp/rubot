@@ -12,6 +12,16 @@ module Rubot
         end
         @channels = @channels.split(",").collect(&:strip)
         @dispatcher = dispatcher
+        
+        @message_queue = MessageQueue.new(2)
+        
+        @message_queue.message do |destination, message|
+          raw "PRIVMSG #{destination} :#{message}"
+        end
+        
+        @message_queue.action do |destination, action|
+          raw "PRIVMSG #{destination} :\001ACTION #{action}\001"
+        end
       end
   
       def connect
@@ -55,14 +65,16 @@ module Rubot
       end
   
       def msg(destination, message)
-        message = message.to_s.split("\n") unless message.is_a? Array
-        build_message_array(message).each do |l|
-          raw "PRIVMSG #{destination} :#{l}"
-        end
+        @message_queue.message(destination, message)
+        #message = message.to_s.split("\n") unless message.is_a? Array
+        #build_message_array(message).each do |l|
+        #  raw "PRIVMSG #{destination} :#{l}"
+        #end
       end
   
       def action(destination, message)
-        msg(destination, "\001ACTION #{message}\001")
+        @message_queue.action(destination, message)
+        #msg(destination, "\001ACTION #{message}\001")
       end
   
       def raw(message)
