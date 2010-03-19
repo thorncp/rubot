@@ -1,0 +1,17 @@
+require "rubygems"
+require "fileutils"
+
+unless ARGV[0]
+  puts "usage is: rubot <project_name>"
+  exit!
+end
+
+if Dir.exist? ARGV[0]
+  puts "directory '#{ARGV[0]}' already exists"
+  exit
+end
+
+FileUtils.mkdir ARGV[0]
+spec = Gem.searcher.find("rubot")
+template_dir = File.join(spec.installation_path, "gems", spec.full_name, "lib", "template", "**.*")
+FileUtils.cp_r Dir[template_dir], ARGV[0]
