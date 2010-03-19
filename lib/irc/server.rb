@@ -13,7 +13,7 @@ module Rubot
         @channels = @channels.split(",").collect(&:strip)
         @dispatcher = dispatcher
         
-        @message_queue = MessageQueue.new(2)
+        @message_queue = MessageQueue.new(@message_delay)
         
         @message_queue.message do |destination, message|
           raw "PRIVMSG #{destination} :#{message}"
