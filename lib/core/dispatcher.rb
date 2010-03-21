@@ -10,7 +10,8 @@ module Rubot
         @config = config
         @function_character = @config["function_character"]
     
-        @auth_list = config["auth_list"].split(',')
+        @auth_list = config["auth_list"].split(',') if config["auth_list"]
+        @auth_list ||= []
     
         @resource_lock = Mutex.new
         reload

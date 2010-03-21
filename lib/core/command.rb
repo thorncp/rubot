@@ -1,4 +1,7 @@
 require "shellwords"
+require "ostruct"
+require "optparse"
+
 module Rubot
   module Core
     class Command

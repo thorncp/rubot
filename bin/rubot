@@ -11,7 +11,14 @@ if Dir.exist? ARGV[0]
   exit
 end
 
-FileUtils.mkdir ARGV[0]
+# there has to be a better way to do this
+# why does gem documentation suck so back? (don't pay attention to rubot docs, shh)
 spec = Gem.searcher.find("rubot")
-template_dir = File.join(spec.installation_path, "gems", spec.full_name, "lib", "template", "**.*")
-FileUtils.cp_r Dir[template_dir], ARGV[0]
+template_dir = File.join(spec.installation_path, "gems", spec.full_name, "lib", "template")
+
+FileUtils.cp_r(template_dir, ARGV[0])
+# for some reason gem doesn't include empty folders during the install
+# this is to make sure these directories exist
+%w{resources commands listeners runners}.each do |dir|
+  FileUtils.mkdir File.join(ARGV[0], dir) unless File.exist? File.join(ARGV[0], dir)
+end

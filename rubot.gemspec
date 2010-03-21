@@ -6,15 +6,17 @@ Gem::Specification.new do |s|
   s.description = "A Ruby Bot framwork for IRC featuring reloadable commands and listeners."
   s.homepage = "http://github.com/thorncp/rubot"
   
-  s.version = "0.0.2"
-  s.date = "2010-03-18"
+  s.version = "0.0.3"
+  s.date = "2010-03-20"
   
   s.authors = ["Chris Thorn"]
   s.email = "thorncp@gmail.com"
   
   s.require_paths = ["lib"]
-  s.files = Dir["lib/**/*"] + ["README", "Rakefile"]
+  s.files = Dir["bin/**/*"] + Dir["lib/**/*"] + ["README", "Rakefile"]
   s.extra_rdoc_files = ["README"]
+  
+  s.executables << "rubot"
   
   #s.has_rdoc = true
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "NiftyGenerators", "--main", "README.rdoc"]
