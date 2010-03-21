@@ -1,7 +1,7 @@
 module Rubot
   module Irc
     class Message
-      attr_accessor :destination, :body
+      attr_accessor :destination, :body, :alias, :authenticated
       attr_reader :from
   
       def initialize(from, destination, body)

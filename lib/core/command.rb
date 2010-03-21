@@ -4,14 +4,23 @@ require "optparse"
 
 module Rubot
   module Core
+    # Base class that handles the dirty work for IRC commands.
+    # All commands belong in the /commands directory and
+    # inherit this class.
+    #
+    # Since:: 0.0.1
     class Command
-      attr_reader :protected
   
       def initialize(dispatcher)
         @dispatcher = dispatcher
       end
   
       def run(server, message)
+        if protected? && !message.authenticated
+          server.msg(message.destination, "unauthorized")
+          return
+        end
+        
         args = Shellwords.shellwords(message.body.gsub(/(')/n, "\\\\\'"))
         options = parse(args)
     
@@ -25,7 +34,7 @@ module Rubot
         end
       end
   
-      def is_protected?
+      def protected?
         false
       end
   
@@ -37,13 +46,12 @@ module Rubot
       end
   
       def self.acts_as_protected
-        define_method(:is_protected?) do
+        define_method(:protected?) do
           true
         end
       end
   
       def self.aliases(*aliases)
-        raise ArgumentError, 'only symbols allowed' unless aliases.all? {|a| a.is_a? Symbol}
         define_method(:aliases) do
           aliases
         end
