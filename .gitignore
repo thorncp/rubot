@@ -1,6 +1,6 @@
 Manifest
-Rakefile
 pkg
 doc
 *.gem
 *.bak
+rebuild
