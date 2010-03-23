@@ -1,8 +1,8 @@
 module Rubot
   module Irc
-    smartload :Constants
-    smartload :Message
-    smartload :MessageQueue
-    smartload :Server
+    require "irc/constants"
+    require "irc/message"
+    require "irc/message_queue"
+    require "irc/server"
   end
 end

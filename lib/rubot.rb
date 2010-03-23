@@ -1,9 +1,5 @@
 module Rubot
-  
-  dir = File.dirname(__FILE__)
-  
-  # load rubot
-  require "#{dir}/extensions"
-  require "#{dir}/core"
-  require "#{dir}/irc"
+  require "extensions"
+  require "core"
+  require "irc"
 end

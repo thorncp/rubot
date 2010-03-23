@@ -1,8 +1,8 @@
 module Rubot
   module Core
-    smartload :Dispatcher
-    smartload :Command
-    smartload :Listener
-    smartload :Runner
+    require "core/command"
+    require "core/listener"
+    require "core/runner"
+    require "core/dispatcher"
   end
 end
