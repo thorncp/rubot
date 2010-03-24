@@ -1,6 +1,6 @@
 module Rubot
   module Core
-    class BaseRunner
+    class Runner
   
       def initialize(dispatcher)
         @dispatcher = dispatcher
