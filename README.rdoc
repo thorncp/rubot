@@ -1,14 +1,18 @@
 = rubot
 A Ruby Bot framwork for IRC featuring reloadable commands and listeners.
 
-== Install
+== Installation
   gem install rubot
 
 == Usage
 This gem installs an executable script to your gems directory.
 
-To initialize a new project, type
-  rubot <project_name>
+To get help at any time,
+  rubot --help
+
+===Initialization
+To initialize a new project,
+  rubot --init <project_name>
   
 This will create the <project_name> directory with the following structure:
 * *commands* - Houses commands to be called by user.  Includes several useful default commands
@@ -17,7 +21,13 @@ This will create the <project_name> directory with the following structure:
 * *runners* - Houses runners that are executed at startup
 * *main.rb* - Sets up and launches rubot
 
-After creating the project, modify config.yml to meet your needs.
+After creating the project, modify resources/config.yml to meet your needs.
 
 Run the bot with
   ruby main.rb
+
+===Generators
+Rubot provides generators for commands, listeners, and runners.
+  rubot --command my_command
+  rubot --listener my_listener
+  rubot --runner my_runner
