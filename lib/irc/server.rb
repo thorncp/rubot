@@ -4,7 +4,7 @@ module Rubot
   module Irc
     class Server
       include Rubot::Irc::Constants
-      attr_reader :nick, :connected_at
+      attr_reader :nick, :connected_at, :channels
   
       def initialize(dispatcher)
         dispatcher.config["server"].each_pair do |key, value|
