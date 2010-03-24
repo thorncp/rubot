@@ -1,0 +1,7 @@
+class --NAME-- < Rubot::Core::Listener
+  def execute(server, message)
+    if message.body.include? server.nick
+      server.msg(message.destination, "hi #{message.from}")
+    end
+  end
+end

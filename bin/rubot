@@ -1,25 +1,48 @@
 #!/usr/bin/env ruby
 
-require "fileutils"
+require "optparse"
+require "ostruct"
+require "template"
 
-unless ARGV[0]
-  puts "usage is: rubot <project_name>"
-  exit!
+options = OpenStruct.new
+parser = OptionParser.new do |parser|
+  parser.banner = "Usage: #{__FILE__} <options>"
+  
+  parser.separator ""
+  parser.separator "Initialization"
+  
+  parser.on("-i", "--init ProjectName", "Initializes a new rubot project in the ProjectName directory") do |name|
+    init name
+    exit
+  end
+  
+  parser.separator ""
+  parser.separator "Generators"
+  
+  parser.on("-c", "--command Name", "Generates a new command named Name") do |name|
+    generate_command(name)
+    exit
+  end
+  
+  parser.on("-l", "--listener Name", "Generates a new listener named Name") do |name|
+    generate_listener(name)
+    exit
+  end
+  
+  parser.on("-r", "--runner Name", "Generates a new listener named Name") do |name|
+   generate_runner(name)
+    exit
+  end
+  
+  parser.separator ""
+  parser.separator "Common options:"
+  
+  parser.on_tail("-h", "--help", "Show this message") do
+    puts parser
+    exit
+  end
 end
 
-if Dir.exist? ARGV[0]
-  puts "directory '#{ARGV[0]}' already exists"
-  exit
-end
+parser.parse!(ARGV)
+puts parser
 
-# there has to be a better way to do this
-# why does gem documentation suck so back? (don't pay attention to rubot docs, shh)
-spec = Gem.searcher.find("rubot")
-template_dir = File.join(spec.installation_path, "gems", spec.full_name, "lib", "template")
-
-FileUtils.cp_r(template_dir, ARGV[0])
-# for some reason gem doesn't include empty folders during the install
-# this is to make sure these directories exist
-%w{resources commands listeners runners}.each do |dir|
-  FileUtils.mkdir File.join(ARGV[0], dir) unless File.exist? File.join(ARGV[0], dir)
-end

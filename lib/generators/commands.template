@@ -1,0 +1,5 @@
+class --NAME-- < Rubot::Core::Command
+  def execute(server, message, options)
+    server.msg(message.destination, "unimplemented")
+  end
+end
