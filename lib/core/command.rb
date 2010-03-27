@@ -5,8 +5,6 @@ require "optparse"
 module Rubot
   module Core
     # Base class that handles the dirty work for IRC commands.
-    #
-    # Since:: 0.0.1
     class Command
   
       # Takes an instance of Rubot::Core::Dispatcher. Any
