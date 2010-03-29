@@ -30,7 +30,7 @@ module Rubot
       # * function_character - The character used to denote a command
       # * auth_list - Comma separated string of authenticated users
       #
-      # ==== Paramters
+      # ==== Parameters
       # config<Hash>:: Hash containing config values
       def initialize(config)
         @config = config

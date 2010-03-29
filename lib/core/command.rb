@@ -20,7 +20,7 @@ module Rubot
   
       # Runs the command with the given server and message.
       #
-      # ==== Paramters
+      # ==== Parameters
       # server<Rubot::Irc::Server>:: Server instance the command should use for
       # messaging and information.
       # message<Rubot::Irc::Message>:: The message that invoked the command.
