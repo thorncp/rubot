@@ -45,7 +45,7 @@ module Rubot
     # In the case of (exploded) arrays, each element in the array will be treated
     # as a separate call to the block used to create the method.
     #
-    # ==== Fancy Pants Paraters
+    # ==== Fancy Pants Parameters
     # Assuming the code above has been executed, we can run the following:
     #
     #   @message_queue.message "destination_three", "message one", "message two", "message three"
