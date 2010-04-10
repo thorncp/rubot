@@ -68,7 +68,7 @@ module Rubot
       # message<Rubot:Irc::Message>:: The message to handle
       def handle_message(server, message)
         Thread.new do
-          if message.body =~ /^#{@function_character}([a-z_]+)( .+)?$/i
+          if message.body.start_with?(@function_character) && message.body =~ /^.([a-z_]+)( .+)?$/i
             message.body = $2.nil? ? "" : $2.strip # remove the function name from the message
             message.alias = $1.underscore.to_sym
 
