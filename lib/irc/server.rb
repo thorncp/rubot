@@ -97,12 +97,10 @@ module Rubot
       # destination<String>:: Where to send the message
       # message<String,Array>:: The message(s) to be sent
       def msg(destination, message)
-        @message_queue.message(destination, message)
-        # TODO use build_message_array with the queue
-        #message = message.to_s.split("\n") unless message.is_a? Array
-        #build_message_array(message).each do |l|
-        #  raw "PRIVMSG #{destination} :#{l}"
-        #end
+        message = message.to_s.split("\n") unless message.is_a? Array
+        build_message_array(message).each do |line|
+          @message_queue.message(destination, line)
+        end
       end
       
       # Adds action(s) to the outgoing queue
