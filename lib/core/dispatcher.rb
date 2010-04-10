@@ -66,16 +66,18 @@ module Rubot
       # ==== Parameters
       # server<Rubot::Irc::Server>:: The server where the messge was received
       # message<Rubot:Irc::Message>:: The message to handle
-      def handle_message(server, message)		  
-        if message.body =~ /^#{@function_character}([a-z_]+)( .+)?$/i
-          message.body = $2.nil? ? "" : $2.strip # remove the function name from the message
-          message.alias = $1.underscore.to_sym
+      def handle_message(server, message)
+        Thread.new do
+          if message.body =~ /^#{@function_character}([a-z_]+)( .+)?$/i
+            message.body = $2.nil? ? "" : $2.strip # remove the function name from the message
+            message.alias = $1.underscore.to_sym
 
-          command = command_from_message(message)
-          command.run(server, message) unless command.nil?
-        elsif message.from != server.nick
-          @listeners.each_value do |listener|
-            listener.execute(server, message)
+            command = command_from_message(message)
+            command.run(server, message) unless command.nil?
+          elsif message.from != server.nick
+            @listeners.each_value do |listener|
+              listener.execute(server, message)
+            end
           end
         end
       end
