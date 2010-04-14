@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A Ruby Bot framwork for IRC featuring reloadable commands and listeners."
   s.homepage = "http://github.com/thorncp/rubot"
   
-  s.version = "0.1.5"
+  s.version = "0.2"
   s.date = Time.new.strftime "%Y-%m-%d"
   
   s.authors = ["Chris Thorn"]
