@@ -6,6 +6,10 @@ cmds = [
   "gem install rubot"
 ]
 
+# clean all old gem files
+
+Dir["*.gem"].each {|file| File.delete file}
+
 cmds.each do |cmd|
   IO.popen(cmd) do |process|
     process.each {|line| puts line}
