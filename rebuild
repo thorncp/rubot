@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+cmds = [
+  "echo y | gem uninstall rubot",
+  "gem build rubot.gemspec",
+  "gem install rubot"
+]
+
+cmds.each do |cmd|
+  IO.popen(cmd) do |process|
+    process.each {|line| puts line}
+  end
+end

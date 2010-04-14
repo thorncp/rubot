@@ -3,5 +3,4 @@ pkg
 doc
 *.gem
 *.bak
-rebuild
 *~
