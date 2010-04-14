@@ -6,7 +6,7 @@ require "template"
 
 options = OpenStruct.new
 parser = OptionParser.new do |parser|
-  parser.banner = "Usage: #{__FILE__} <options>"
+  parser.banner = "Usage: #{File.basename(__FILE__)} <options>"
   
   parser.separator ""
   parser.separator "Initialization"
@@ -19,17 +19,22 @@ parser = OptionParser.new do |parser|
   parser.separator ""
   parser.separator "Generators"
   
-  parser.on("-c", "--command Name", "Generates a new command named Name") do |name|
+  parser.on("-c", "--command Name", "Generates a new command") do |name|
     generate_command(name)
     exit
   end
   
-  parser.on("-l", "--listener Name", "Generates a new listener named Name") do |name|
+  parser.on("-e", "--exiter Name", "Generates a new exiter") do |name|
+    generate_exiter(name)
+    exit
+  end
+  
+  parser.on("-l", "--listener Name", "Generates a new listener") do |name|
     generate_listener(name)
     exit
   end
   
-  parser.on("-r", "--runner Name", "Generates a new listener named Name") do |name|
+  parser.on("-r", "--runner Name", "Generates a new listener") do |name|
    generate_runner(name)
     exit
   end

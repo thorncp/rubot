@@ -32,7 +32,12 @@ def generate_runner(name)
   generate("runners", name)
 end
 
+def generate_exiter(name)
+  generate("exiters", name)
+end
+
 def generate(template, name)
+  FileUtils.mkdir(template) unless Dir.exist?(template)
   filename = File.join(template, "#{name.underscore}.rb")
   puts "file '#{filename}' already exists" and return if File.exist?(filename)
   

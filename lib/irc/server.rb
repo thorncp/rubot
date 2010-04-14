@@ -38,31 +38,37 @@ module Rubot
         @message_queue.action do |destination, action|
           raw "PRIVMSG #{destination} :\001ACTION #{action}\001"
         end
+        
+        @message_queue.quit do |blah, more_blah|
+          raw "QUIT :#{@quit_message}"
+          @conn.close
+        end
       end
   
       # Attempts to make a connection to the server
       def connect
         return if @is_connected
-    
+
         @conn = TCPSocket.open(@host, @port, @vhost)
         raw "USER #{@nick} #{@nick} #{@nick} :#{@real_name}"
         change_nick @nick
         join @channels
-    
+
         begin
-            main_loop()
+          main_loop()
         rescue Interrupt
+          quit
         rescue Exception => detail
-            puts detail.message()
-            print detail.backtrace.join("\n")
-            retry
+          puts detail.message()
+          print detail.backtrace.join("\n")
+          retry
         end
       end
   
       # Sends the quit command to the IRC server, then closes the connection.
       def quit
-        raw "QUIT :#{@quit_message}"
-        @conn.close
+        @dispatcher.on_quit(self)
+        @message_queue.quit("Hades", "ice water plz").join
       end
   
       # Changes our nick.

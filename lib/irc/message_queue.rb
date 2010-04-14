@@ -87,6 +87,8 @@ module Rubot
       # that the block takes two arguments, a destination and a message (This is a
       # message queue after all).
       #
+      # The generated method returns the active thread.
+      #
       # ==== Parameters
       # method<Symbol>:: Method name
       # args<Array>:: Parameters given to the method
@@ -101,6 +103,7 @@ module Rubot
               @lock.synchronize do
                 @thread = Thread.new { flush } unless @thread && @thread.alive?
               end
+              @thread
             end
           end
           nil

@@ -42,6 +42,7 @@ module Rubot
         reload
         # runners are only run on server connection, so there's no need them to be in reload 
         load_dir "runners", @runners = {}
+        load_dir "exiters", @exiters = {}
       end
 
       # Called when successful connection is made to a server. This is when the runners are
@@ -116,6 +117,15 @@ module Rubot
       def remove_auth(nick)
         @auth_list.delete nick
       end
+      
+      # Handles the on quit event, which is triggered when the server recieves the
+      # quit message or an interrupt is triggered.
+      #
+      # ==== Parameters
+      # server<Rubot::Irc::Server>:: The server that is quiting.
+      def on_quit(server)
+        execute_exiters(server)
+      end
 
       private
 
@@ -125,6 +135,14 @@ module Rubot
       # server<Rubot::Irc::Server>:: Server instance
       def run_runners(server)
         @runners.each_value {|runner| runner.run(server)}
+      end
+      
+      # Executes all exiters with the given server.
+      #
+      # ==== Parameters
+      # server<Rubot::Irc::Server>:: Server instance
+      def execute_exiters(server)
+        @exiters.each_value {|exiter| exiter.execute(server)}
       end
 
       # Loads all files in the given directory and stores the class instances
