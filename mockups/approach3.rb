@@ -2,7 +2,9 @@
 
 ## resources/greeting.rb
 class Greeting < Rubot::Core::Resource
-  attr_accessor :val
+  class << self
+    attr_accessor :val
+  end
 end
 
 ## controllers/greeting_controller.rb
