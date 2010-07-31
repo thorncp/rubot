@@ -25,11 +25,8 @@ module Rubot
             
             # todo: handle name collisions
             controller = @controllers.find { |c| c.execute? message.alias }
-            controller.instantiate.execute(server, self, message)
-          elsif message.from != server.nick
-            @listeners.each_value do |listener|
-              listener.execute(server, message)
-            end
+            instance = controller.new
+            instance.execute(server, self, message)
           end
       end
     end

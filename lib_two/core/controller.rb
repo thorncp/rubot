@@ -6,10 +6,6 @@ module Rubot
         attr_reader :listeners
       end
       
-      def self.instantiate
-        self.new
-      end
-      
       def self.command(*aliases, &block)
         @commands ||= {}
         aliases.each { |a| @commands[a.to_s] = block }
