@@ -4,3 +4,4 @@ doc
 *.gem
 *.bak
 *~
+old_lib

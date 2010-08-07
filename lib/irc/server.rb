@@ -156,7 +156,7 @@ module Rubot
   
       # Determines what to do with the input from the server
       def handle_server_input(s)
-    	  puts s # TODO logger
+        # puts s # TODO logger
     
         case s.strip
           when /^PING :(.+)$/i

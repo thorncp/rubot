@@ -1,9 +1,6 @@
 module Rubot
-  module Core
-    require "core/command"
-    require "core/listener"
-    require "core/runner"
-    require "core/exiter"
+  module Core    
+    require "core/controller"
     require "core/dispatcher"
   end
 end

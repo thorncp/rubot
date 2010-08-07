@@ -16,16 +16,21 @@ module Rubot
         @listeners[options] = block
       end
       
-      def self.execute(server, command, message)
-        if @commands.has_key? command.to_s
+      def execute(server, dispatcher, message)
+        if commands.has_key? message.alias
           @server = server
           @message = message
-          @commands[command].call
+          @dispatcher = dispatcher
+          instance_exec &commands[message.alias]
         end
       end
       
       def self.execute?(command)
         @commands.has_key? command
+      end
+      
+      def commands
+        self.class.commands
       end
       
       private
