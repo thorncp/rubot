@@ -1,14 +1,13 @@
 ---
-# colons at beginning are to create symbols in the hash instead of strings 
 server:
   host: irc.freenode.net
   port: 6667
-  nick: rubot-test
-  alt_nick: rubot_
-  real_name: slave motherfucking bot
-  channels: "#sfs_test"
-  #vhost: naggers.us
-  quit_message: bigger hills for ya grills
+  nick: rubot-edge
+  alt_nick: rubot-edge_
+  real_name: rubot
+  channels: "#rubot"
+  #vhost: 
+  quit_message: powered by rubot
 
 function_character: "!"
-auth_list: juuntu,ijuuntu,rhiza,mculp,thorncp
+auth_list: thorncp
