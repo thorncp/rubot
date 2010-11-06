@@ -21,7 +21,13 @@ module Rubot
           @server = server
           @message = message
           @dispatcher = dispatcher
-          instance_exec &commands[message.alias]
+          
+          begin
+            instance_exec &commands[message.alias]
+          rescue Exception => detail
+            puts detail.message
+            puts detail.backtrace.join("\n")
+          end
         end
       end
       
@@ -33,10 +39,17 @@ module Rubot
         self.class.commands
       end
       
-      private
-      attr_reader :server
-      attr_reader :dispatcher
-      attr_reader :message
+      def message(msg)
+        @server.msg(@message.destination, msg)
+      end
+      
+      def action(msg)
+        @server.action(@message.destination, msg)
+      end
+      
+      def text
+        @message.body
+      end
     end
   end
 end

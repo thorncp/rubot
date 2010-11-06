@@ -1,15 +1,19 @@
 class AdminController < Rubot::Core::Controller
   command :quit do
-    server.quit
+    @server.quit
     exit!
   end
   
   command :nick do
-    server.change_nick message.body
+    if text =~ /^[a-z][-a-z0-9\[\]\\`^{}]+$/i
+      @server.change_nick text
+    else
+      message "invalid nick"
+    end
   end
   
   command :reload do
-    dispatcher.reload
-    server.action message.destination, "reloaded"
+    @dispatcher.reload
+    action "reloaded"
   end
 end
