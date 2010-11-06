@@ -7,4 +7,9 @@ class AdminController < Rubot::Core::Controller
   command :nick do
     server.change_nick message.body
   end
+  
+  command :reload do
+    dispatcher.reload
+    server.action message.destination, "reloaded"
+  end
 end
