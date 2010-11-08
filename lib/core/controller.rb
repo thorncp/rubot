@@ -4,6 +4,15 @@ module Rubot
       class << self
         attr_reader :commands
         attr_reader :listeners
+        attr_reader :protected_commands
+      end
+      
+      def self.authenticated(*symbols)
+        @protected_commands = symbols.map(&:to_s)
+      end
+      
+      def self.protected?(command)
+        @protected_commands.include?("all") or @protected_commands.include?(command)
       end
       
       def self.command(*aliases, &block)
@@ -16,23 +25,22 @@ module Rubot
         @listeners[options] = block
       end
       
-      def execute(server, dispatcher, message)
-        if commands.has_key? message.alias
-          @server = server
-          @message = message
-          @dispatcher = dispatcher
-          
-          begin
-            instance_exec &commands[message.alias]
-          rescue Exception => detail
-            puts detail.message
-            puts detail.backtrace.join("\n")
-          end
-        end
-      end
-      
       def self.execute?(command)
         @commands.has_key? command
+      end
+      
+      def execute(server, dispatcher, message)
+        @server = server
+        @message = message
+        @dispatcher = dispatcher
+        
+        begin
+          instance_exec &commands[message.alias]
+        rescue Exception => detail
+          puts detail.message
+          puts detail.backtrace.join("\n")
+          # todo: log
+        end
       end
       
       def commands

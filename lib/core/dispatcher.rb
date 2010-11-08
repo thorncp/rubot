@@ -37,11 +37,18 @@ module Rubot
       def handle_message(server, message)
         Thread.new do
           if message.body.start_with?(@function_character) && message.body =~ /^.([a-z_]+)( .+)?$/i
-            message.body = $2.nil? ? "" : $2.strip # remove the function name from the message
+            message.body = $2.to_s.strip # remove the function name from the message
             message.alias = $1.underscore
+            message.authenticated = @config["auth_list"].include?(message.from)
             
             # todo: handle name collisions
             controller = @controllers.find { |c| c.execute? message.alias }
+            
+            if controller.protected?(message.alias) && !message.authenticated
+              server.msg(message.destination, "insufficient priviledges")
+              return
+            end
+            
             instance = controller.new
             instance.execute(server, self, message)
           end

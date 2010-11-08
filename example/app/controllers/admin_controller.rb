@@ -1,4 +1,6 @@
 class AdminController < Rubot::Core::Controller
+  authenticated :all
+  
   command :quit do
     @server.quit
     exit!
