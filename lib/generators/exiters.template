@@ -1,7 +1,0 @@
-class --NAME-- < Rubot::Core::Exiter
-  def execute(server)
-    server.channels.each do |channel|
-      server.msg(channel, "goodbye cruel world")
-    end
-  end
-end

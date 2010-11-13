@@ -1,7 +1,0 @@
-class --NAME-- < Rubot::Core::Runner
-  def run(server)
-    server.channels.each do |channel|
-      server.msg(channel, "hello world!")
-    end
-  end
-end
