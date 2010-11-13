@@ -22,8 +22,7 @@ module Rubot
       
       it "should join all channels in config" do
         server = init_server(:channels => ["#rubot", "#ruby"])
-        server.should_receive(:raw).with("JOIN #rubot").once
-        server.should_receive(:raw).with("JOIN #ruby").once
+        server.should_receive(:raw).with("JOIN #rubot,#ruby").once
         server.connection_completed
       end
     end

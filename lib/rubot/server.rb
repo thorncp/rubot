@@ -6,8 +6,8 @@ module Rubot
     
     def connection_completed
       raw "USER" + " #{@config[:nick]}" * 4
-      raw "NICK #{@config[:nick]}"
-      @config[:channels].each { |c| raw("JOIN #{c}") } if @config[:channels]
+      raw "NICK " + @config[:nick]
+      raw "JOIN " + @config[:channels].join(",") if @config[:channels]
     end
 
     def raw(msg)
