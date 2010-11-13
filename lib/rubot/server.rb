@@ -1,6 +1,7 @@
 module Rubot
   module Server
-    def initialize(config)
+    def initialize(dispatcher, config)
+      @dispatcher = dispatcher
       @config = config
     end
     
@@ -11,21 +12,21 @@ module Rubot
     end
 
     def raw(msg)
+      msg = msg.chomp + "\n"
       puts msg if verbose?
-      send_data "#{msg}\n"
+      send_data(msg)
     end
 
     def receive_data(data)
+      puts data if verbose?
+      
       case data
         when /^PING :(.+)$/i
           raw "PONG :#{$1}"
+        when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+)\s:(.+)$/i
+          message = Message.new(from: $1, to: $4, text: $5)
+          @dispatcher.message_received(self, message)
       end
-      
-      if data =~ /hi rubot/i
-        raw "PRIVMSG #rubot :hi!"
-      end
-      
-      puts data if verbose?
     end
     
     def verbose?
