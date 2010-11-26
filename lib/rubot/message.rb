@@ -1,9 +1,9 @@
 module Rubot
   class Message
-    attr_reader :from, :to, :text
+    attr_accessor :from, :to, :text
     
     def initialize(args = {})
-      args.each { |k,v| instance_variable_set("@#{k}", v) }
+      args.each { |k,v| send("#{k}=", v) }
     end
   end
 end
