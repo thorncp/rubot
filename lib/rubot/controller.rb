@@ -19,7 +19,7 @@ module Rubot
       @commands.include? cmd.to_s
     end
     
-    def self.execute(cmd)
+    def self.execute(cmd, args = {})
       raise NoCommandError, "#{cmd} is not implemented in #{self}" unless @commands.include? cmd.to_s
       self.new.instance_exec &@commands[cmd.to_s]
     end

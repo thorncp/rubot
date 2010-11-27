@@ -24,7 +24,7 @@ module Rubot
       end
     end
     
-    describe "#execute" do
+    describe ".execute" do
       it "should execute the given command" do
         @controller.execute(:yo_dawg).should == "sup"
       end
