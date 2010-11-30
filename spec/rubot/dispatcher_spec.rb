@@ -9,17 +9,17 @@ module Rubot
         command :yo_dawg do
         end
       end
+      
+      @dispatcher.instance_variable_set(:@controllers, [@controller])
     end
     
     describe "#message_received" do
       it "should execute a defined command" do
-        @dispatcher.instance_variable_set(:@controllers, [@controller])
         @controller.should_receive(:execute).with("yo_dawg", anything)
         @dispatcher.message_received(nil, Message.new(text: "!yo_dawg"))
       end
       
       it "should not execute an undefined command" do
-        @dispatcher.instance_variable_set(:@controllers, [@controller])
         @controller.should_not_receive(:execute)
         @dispatcher.message_received(nil, Message.new(text: "!invalid"))
       end

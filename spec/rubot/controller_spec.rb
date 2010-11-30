@@ -2,15 +2,13 @@ require "spec_helper"
 
 module Rubot
   describe Controller do
-    before :each do
-      @controller = Class.new(Controller) do
-        command :yo_dawg do
-          "sup"
+    describe ".execute?" do
+      before :each do
+        @controller = Class.new(Controller) do
+          command(:yo_dawg) {}
         end
       end
-    end
-    
-    describe ".execute?" do
+        
       it "should claim to be able to execute a defined command" do
         @controller.should satisfy { |c| c.execute?("yo_dawg") }
       end
@@ -25,6 +23,14 @@ module Rubot
     end
     
     describe ".execute" do
+      before :each do
+        @controller = Class.new(Controller) do
+          command(:yo_dawg) { "sup" }
+          command(:test_instance_mehod) { my_instance_method }
+          define_method(:my_instance_method) {}
+        end
+      end
+      
       it "should execute the given command" do
         @controller.execute(:yo_dawg).should == "sup"
       end
@@ -34,16 +40,7 @@ module Rubot
       end
       
       it "should execute in the scope of an instance" do
-        controller = Class.new(Controller) do
-          command :test_instance_mehod do
-            my_instance_mehod
-          end
-          
-          def my_instance_mehod
-          end
-        end
-        
-        lambda { controller.execute :test_instance_mehod }.should_not raise_error
+        lambda { @controller.execute :test_instance_mehod }.should_not raise_error
       end
     end
   end
