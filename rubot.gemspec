@@ -8,11 +8,11 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Chris Thorn"]
   s.email       = ["thorncp@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/thorncp/rubot"
   s.summary     = "A Ruby Bot Framework for IRC"
   s.description = "A Ruby Bot Framework for IRC. More importantly, a project used to learn Ruby."
   
-  s.required_ruby_version = "~> 1.9"
+  s.required_ruby_version = "~> 1.9.2"
 
   s.rubyforge_project = "rubot"
   
