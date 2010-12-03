@@ -7,7 +7,6 @@ module Rubot
     end
     
     def find_contoller(message)
-      puts message.inspect
       if match = message.text.match(/^!(\w+)( .*)?$/i)
         message.alias = match[1]
         message.text.sub!("!#{match[1]}", "").strip
