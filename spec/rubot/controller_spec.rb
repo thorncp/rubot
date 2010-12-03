@@ -46,7 +46,16 @@ module Rubot
         end
         server = double
         
-        @controller.execute(:hit_the_server, server: server).should == server
+        @controller.execute(:hit_the_server, server: server).should be server
+      end
+      
+      it "should give the instance access to the server" do
+        @controller.class_exec do
+          command(:hit_the_message) { message }
+        end
+        message = double
+        
+        @controller.execute(:hit_the_message, message: message).should be message
       end
     end
   end

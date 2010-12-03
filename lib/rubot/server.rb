@@ -12,6 +12,7 @@ module Rubot
     end
 
     def raw(msg)
+      # todo: need a queueing system with delay
       msg = msg.chomp + "\n"
       puts msg if verbose?
       send_data(msg)
@@ -24,13 +25,17 @@ module Rubot
         when /^PING :(.+)$/i
           raw "PONG :#{$1}"
         when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+)\s:(.+)$/i
-          message = Message.new(from: $1, to: $4, text: $5)
+          message = Message.new(from: $1, to: $4, text: $5.strip)
           @dispatcher.message_received(self, message)
       end
     end
     
     def verbose?
       @config[:verbose]
+    end
+    
+    def message(destination, text)
+      raw "PRIVMSG #{destination} :#{text}"
     end
   end
 end

@@ -31,5 +31,9 @@ module Rubot
     def server
       @params[:server]
     end
+    
+    def message
+      @params[:message]
+    end
   end
 end

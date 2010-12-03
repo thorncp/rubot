@@ -53,5 +53,12 @@ module Rubot
         @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\s#rubot\s:hi there!")
       end
     end
+    
+    describe "#message" do
+      it "should send PRIVMSG command" do
+        @server.should_receive(:raw).with("PRIVMSG #rubot :yo dawg")
+        @server.message("#rubot", "yo dawg")
+      end
+    end
   end
 end
