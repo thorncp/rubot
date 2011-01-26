@@ -14,7 +14,7 @@ module Rubot
         @commander.should satisfy { |c| c.execute?("yo_dawg") }
       end
       
-      it "should not clame to execute an undefined command" do
+      it "should not claim to execute an undefined command" do
         @commander.should_not satisfy { |c| c.execute?("invalid") }
       end
       
