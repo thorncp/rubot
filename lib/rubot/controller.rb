@@ -1,4 +1,5 @@
 require "rubot/commands"
+require "rubot/listeners"
 
 module Rubot
   class Controller
