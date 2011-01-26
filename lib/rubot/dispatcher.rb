@@ -1,6 +1,9 @@
 module Rubot
   class Dispatcher
     def message_received(server, message)
+      # todo: consider spamming all controllers with the command, and let them decide
+      # for themselves whether or not to execute it. this will be how listeners will work,
+      # and will make things more consistent
       if controller = find_contoller(message)
         controller.execute(message.alias, server: server, dispatcher: self, message: message)
       end
