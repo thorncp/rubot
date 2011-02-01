@@ -84,5 +84,29 @@ module Rubot
         @@derp.should_not eql(42)
       end
     end
+    
+    describe "complex listener" do
+      before :each do
+        @listener = Class.new do
+          extend Listeners
+          listener(:from => "thorncp", :to => "#rubot", :matches => /dude bro/) { @@derp = 42 }
+        end
+      end
+      
+      it "should listen when all conditions met" do
+        @listener.listen(Message.new(from: "thorncp", to: "#rubot", text: "whats up dude bro"))
+        @@derp.should eql(42)
+      end
+      
+      it "should not listen when only one condition is met" do
+        @listener.listen(Message.new(from: "trollface", to: "#rubot", text: "whats up ruby bros"))
+        @@derp.should_not eql(42)
+      end
+      
+      it "should not listen when only two conditions met" do
+        @listener.listen(Message.new(from: "trollface", to: "#rubot", text: "whats up dude bro"))
+        @@derp.should_not eql(42)
+      end
+    end
   end
 end
