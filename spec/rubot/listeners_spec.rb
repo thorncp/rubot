@@ -26,8 +26,8 @@ module Rubot
       before :each do
         @listener = Class.new do
           extend Listeners
-          listener(:match => /o snap/) { @@derp = 42 }
-          listener(:match => /what up (\w+)/) { @@derp = @matches[1] }
+          listener(:matches => /o snap/) { @@derp = 42 }
+          listener(:matches => /what up (\w+)/) { @@derp = @matches[1] }
         end
       end
       

@@ -11,8 +11,8 @@ module Rubot
         # if :all, just go ahead and go
         unless listener[:all]
           # todo: refactor
-          if listener[:match]
-            next unless matches = message.text.match(listener[:match])
+          if listener[:matches]
+            next unless matches = message.text.match(listener[:matches])
           end
           
           if listener[:from]
