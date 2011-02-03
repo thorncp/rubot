@@ -22,6 +22,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  eventmachine (~> 0.12)
   rspec (~> 2.4)
   rubot!
