@@ -1,4 +1,5 @@
 module Rubot
+  require "extensions"
   require "rubot/no_command_error"
   require "rubot/controller"
   require "rubot/server"

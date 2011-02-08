@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+
+require "rubot"
+require "eventmachine"
+
+if ARGV[0] == "server"
+  dispatcher = Rubot::Dispatcher.new(Dir.pwd)
+  EventMachine::run do
+    EventMachine::connect 'irc.freenode.net', 6667, Rubot::Server, dispatcher, :nick => "rubot-edge", :verbose => true, :channels => ["#rubot"]
+  end
+else
+  puts "wut"
+end

@@ -4,6 +4,7 @@ require "rubot/listeners"
 module Rubot
   class Controller
     extend Commands
+    extend Listeners
     
     def initialize(params)
       @params = params
