@@ -4,11 +4,16 @@ require "bundler/setup"
 
 require "rubot"
 require "eventmachine"
+require "yaml"
 
 if ARGV[0] == "server"
   dispatcher = Rubot::Dispatcher.new(Dir.pwd)
+  
+  config = YAML.load_file("#{Dir.pwd}/config.yml").inject({}) { |h,p| h[p[0].intern] = p[1]; h }
+  config[:port] ||= 6667
+  
   EventMachine::run do
-    EventMachine::connect 'irc.freenode.net', 6667, Rubot::Server, dispatcher, :nick => "rubot-edge", :verbose => true, :channels => ["#rubot"]
+    EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
   end
 else
   puts "wut"
