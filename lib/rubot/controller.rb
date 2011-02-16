@@ -17,5 +17,10 @@ module Rubot
     def message
       @params[:message]
     end
+    
+    def reply(text)
+      destination = message.to == server.nick ? message.from : message.to
+      server.message(destination, text)
+    end
   end
 end

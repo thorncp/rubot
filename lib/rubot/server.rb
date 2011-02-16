@@ -37,5 +37,9 @@ module Rubot
     def message(destination, text)
       raw "PRIVMSG #{destination} :#{text}"
     end
+    
+    def nick
+      @config[:nick]
+    end
   end
 end
