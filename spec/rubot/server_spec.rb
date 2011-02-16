@@ -21,6 +21,10 @@ module Rubot
     end
     
     describe "#connection_completed" do
+      before :each do
+        @server.stub(:raw)
+      end
+      
       it "should send user info" do
         @server.should_receive(:raw).with("USER rubot rubot rubot rubot").once
         @server.connection_completed

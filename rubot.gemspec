@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "rubot"
   
   s.add_dependency "eventmachine", "~> 0.12"
-  s.add_development_dependency "rspec", "2.4"
+  s.add_development_dependency "rspec", "~> 2.4"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
