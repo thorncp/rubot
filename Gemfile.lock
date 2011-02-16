@@ -22,5 +22,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rspec (~> 2.4)
+  rspec (= 2.4)
   rubot!
