@@ -6,7 +6,7 @@ module Rubot
       listeners << options
     end
     
-    def listen(message, *args)
+    def listen(message, args = {})
       listeners.each do |listener|
         # if :all, just go ahead and go
         unless listener[:all]

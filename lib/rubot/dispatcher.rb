@@ -29,7 +29,7 @@ module Rubot
       if controller = find_contoller(message)
         controller.execute(message.alias, args)
       else
-        @controllers.each { |c| c.listen(args) }
+        @controllers.each { |c| c.listen(message, args) }
       end
     end
     
