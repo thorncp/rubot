@@ -1,12 +1,20 @@
 module Rubot
   class Dispatcher
-    def initialize(dir)
+    def initialize(dir, config = {})
+      @config = config
+      @fc = config[:function_character] || '!'
       @controllers = []
+
       Dir["#{dir}/controllers/*.rb"].each do |file|
         load file
-        name = File.basename(file, ".rb")
-        klass = eval(name.camelize)
-        @controllers << klass
+        name = File.basename(file, ".rb").camelize
+
+        begin
+          @controllers << eval(name)
+        rescue NameError
+          # todo: to exit or not to exit?
+          puts "Could not load class #{name} from #{file}"
+        end
       end
     end
 
@@ -28,7 +36,7 @@ module Rubot
 
     def find_contoller(message)
       # pull function character to config
-      if match = message.text.match(/^!(\w+)( .*)?$/i)
+      if match = message.text.match(/^#{@fc}(\w+)( .*)?$/i)
         message.alias = match[1]
         message.text.sub!("!#{match[1]}", "").strip
         @controllers.find { |c| c.execute?(match[1]) }
@@ -36,15 +44,18 @@ module Rubot
     end
 
     def wrap(&block)
-      # take into account the config value of :verbose,
-      # that involves getting the config into this class
       Thread.new do
         begin
           block.call
         rescue RuntimeError => e
-          puts e.inspect
+          # todo: proper logging
+          puts e
         end
       end
+    end
+
+    def verbose?
+      @config[:verbose]
     end
   end
 end
