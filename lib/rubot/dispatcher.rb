@@ -5,7 +5,7 @@ module Rubot
       @fc = config[:function_character] || '!'
       @controllers = []
 
-      Dir["#{dir}/controllers/*.rb"].each do |file|
+      Dir["#{dir}/controllers/**/*.rb"].each do |file|
         load file
         name = File.basename(file, ".rb").camelize
 
@@ -15,6 +15,10 @@ module Rubot
           # todo: to exit or not to exit?
           puts "Could not load class #{name} from #{file}"
         end
+      end
+
+      Dir["#{dir}/resources/**/*.rb"].each do |file|
+        load file
       end
     end
 
