@@ -1,11 +1,22 @@
 module Rubot
   class Dispatcher
     def initialize(dir, config = {})
+      @dir = dir
       @config = config
       @fc = config[:function_character] || '!'
+      
+      reload
+    end
+
+    def reload
+      load_controllers
+      load_resources
+    end
+
+    def load_controllers
       @controllers = []
 
-      Dir["#{dir}/controllers/**/*.rb"].each do |file|
+      Dir["#{@dir}/controllers/**/*.rb"].each do |file|
         load file
         name = File.basename(file, ".rb").camelize
 
@@ -16,8 +27,10 @@ module Rubot
           puts "Could not load class #{name} from #{file}"
         end
       end
+    end
 
-      Dir["#{dir}/resources/**/*.rb"].each do |file|
+    def load_resources
+      Dir["#{@dir}/resources/**/*.rb"].each do |file|
         load file
       end
     end
@@ -39,7 +52,6 @@ module Rubot
     end
 
     def find_contoller(message)
-      # pull function character to config
       if match = message.text.match(/^#{@fc}(\w+)( .*)?$/i)
         message.alias = match[1]
         message.text.sub!("!#{match[1]}", "").strip
