@@ -5,4 +5,5 @@ module Rubot
   require "rubot/server"
   require "rubot/dispatcher"
   require "rubot/message"
+  require "rubot/web_resource"
 end

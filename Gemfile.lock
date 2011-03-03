@@ -3,12 +3,14 @@ PATH
   specs:
     rubot (0.3.0)
       eventmachine (~> 0.12)
+      nokogiri
 
 GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.2)
     eventmachine (0.12.10)
+    nokogiri (1.4.4)
     rspec (2.4.0)
       rspec-core (~> 2.4.0)
       rspec-expectations (~> 2.4.0)
