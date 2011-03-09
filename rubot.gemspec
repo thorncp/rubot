@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "rubot"
   
-  s.add_dependency "eventmachine", "~> 0.12"
+  s.add_dependency "eventmachine"
   s.add_dependency "nokogiri"
   s.add_development_dependency "rspec", "~> 2.4"
 

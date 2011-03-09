@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rubot (0.3.0)
-      eventmachine (~> 0.12)
+      eventmachine
       nokogiri
 
 GEM
