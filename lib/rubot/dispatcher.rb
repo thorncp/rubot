@@ -1,3 +1,8 @@
+require "sqlite3"
+require "sequel"
+
+DB = Sequel.sqlite("db/development.db")
+
 module Rubot
   class Dispatcher
     def initialize(dir, config = {})
