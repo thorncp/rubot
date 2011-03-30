@@ -18,6 +18,10 @@ module Rubot
       @params[:message]
     end
     
+    def dispatcher
+      @params[:dispatcher]
+    end
+    
     def reply(text)
       destination = message.to == server.nick ? message.from : message.to
       server.message(destination, text)
