@@ -59,7 +59,7 @@ module Rubot
     def find_contoller(message)
       if match = message.text.match(/^#{@fc}(\w+)( .*)?$/i)
         message.alias = match[1]
-        message.text.sub!("!#{match[1]}", "").strip
+        message.text.sub!("!#{match[1]}", "").strip!
         @controllers.find { |c| c.execute?(match[1]) }
       end
     end
@@ -68,9 +68,10 @@ module Rubot
       Thread.new do
         begin
           block.call
-        rescue RuntimeError => e
+        rescue Exception => e
           # todo: proper logging
-          puts e
+          puts "ERROR: #{e.message}"
+          puts e.backtrace
         end
       end
     end
