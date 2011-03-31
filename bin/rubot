@@ -12,9 +12,13 @@ if ARGV[0] == "server"
   
   dispatcher = Rubot::Dispatcher.new(Dir.pwd, config)
 
-  EventMachine::run do
-    EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
-  end
+  begin
+    EventMachine::run do
+      EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
+    end
+   rescue Interrupt
+     dispatcher.quit
+   end
 else
   puts "wut"
 end
