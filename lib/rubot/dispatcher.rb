@@ -68,9 +68,9 @@ module Rubot
       Thread.new do
         begin
           block.call
-        rescue Exception => e
+        rescue StandardError => e
           # todo: proper logging
-          puts "ERROR: #{e.message}"
+          puts "ERROR <#{e.class}>: #{e.message}"
           puts e.backtrace
         end
       end
@@ -78,6 +78,14 @@ module Rubot
 
     def verbose?
       @config[:verbose]
+    end
+
+    def quit
+      threads = @controllers.map do |c|
+        wrap { c.trigger :quit }
+      end
+      threads.each(&:join)
+      exit
     end
   end
 end

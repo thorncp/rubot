@@ -1,10 +1,12 @@
 require "rubot/commands"
 require "rubot/listeners"
+require "rubot/events"
 
 module Rubot
   class Controller
     extend Commands
     extend Listeners
+    extend Events
     
     def initialize(params)
       @params = params
