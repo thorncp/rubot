@@ -16,5 +16,14 @@ module Rubot
       klass = Class.new { extend Events }
       lambda { klass.trigger(:lolwut) }.should_not raise_error
     end
+
+    it "should claim to handle defined events" do
+      klass = Class.new do
+        extend Events
+        on(:woot) { my_instance_method }
+      end
+
+      klass.should satisfy { |k| k.handle?(:woot) }
+    end
   end
 end
