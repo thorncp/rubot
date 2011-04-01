@@ -4,8 +4,10 @@ module Rubot
       events[event.to_s] << block
     end
 
-    def trigger(event)
-      events[event.to_s].each(&:call)
+    def trigger(name, *args)
+      events[name.to_s].each do |event|
+        self.new(args).instance_exec(&event)
+      end
     end
 
     def events

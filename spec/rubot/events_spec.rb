@@ -2,14 +2,14 @@ require "spec_helper"
 
 module Rubot
   describe Events do
-    it "should trigger defined events" do
+    it "should trigger defined events and execute in the scope of an instance" do
       klass = Class.new do
         extend Events
-        on(:woot) { call_it }
+        on(:woot) { my_instance_method }
+        define_method(:my_instance_method) {}
       end
-      
-      klass.should_receive :call_it
-      klass.trigger :woot
+
+      lambda { klass.trigger(:woot) }.should_not raise_error
     end
 
     it "should not raise when triggering an undefined event" do
