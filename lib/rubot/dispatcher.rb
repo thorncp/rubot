@@ -16,6 +16,10 @@ module Rubot
     def reload
       load_controllers
       load_resources
+
+      wrap_all(@controllers) do |controller|
+        controller.trigger :reload, :dispatcher => self
+      end
     end
 
     def load_controllers
@@ -81,16 +85,22 @@ module Rubot
     end
 
     def quit
-      threads = @controllers.map do |c|
-        wrap { c.trigger :quit, :dispatcher => self }
+      threads = wrap_all(@controllers) do |controller|
+        controller.trigger :quit, :dispatcher => self
       end
       threads.each(&:join)
       exit
     end
 
     def connected(server)
-      threads = @controllers.map do |c|
-        wrap { c.trigger :connect, :dispatcher => self, :server => server }
+      wrap_all(@controllers) do |controller|
+        controller.trigger :connect, :dispatcher => self, :server => server
+      end
+    end
+
+    def wrap_all(collection)
+      collection.map do |element|
+        wrap { yield element }
       end
     end
   end
