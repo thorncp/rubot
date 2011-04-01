@@ -82,10 +82,16 @@ module Rubot
 
     def quit
       threads = @controllers.map do |c|
-        wrap { c.trigger :quit }
+        wrap { c.trigger :quit, :dispatcher => self }
       end
       threads.each(&:join)
       exit
+    end
+
+    def connected(server)
+      threads = @controllers.map do |c|
+        wrap { c.trigger :connect, :dispatcher => self, :server => server }
+      end
     end
   end
 end

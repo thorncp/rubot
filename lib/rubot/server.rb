@@ -1,5 +1,7 @@
 module Rubot
   module Server
+    attr_reader :connected_at
+
     def initialize(dispatcher, config)
       @dispatcher = dispatcher
       @config = config
@@ -24,6 +26,8 @@ module Rubot
       case data
         when /^PING :(.+)$/i
           raw "PONG :#{$1}"
+        when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
+          handle_meta($1, $2.to_i, $4)
         when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+)\s:(.+)$/i
           message = Message.new(from: $1, to: $4, text: $5.strip)
           @dispatcher.message_received(self, message)
@@ -40,6 +44,15 @@ module Rubot
     
     def nick
       @config[:nick]
+    end
+
+    def handle_meta(server, code, message)
+      case code
+      when 1 # welcome message, we're officially connected to the server. todo pull to constants
+        @dispatcher.connected(self)
+        @is_connected = true
+        @connected_at = Time.now
+      end
     end
   end
 end
