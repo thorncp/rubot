@@ -17,13 +17,20 @@ module Rubot
     it "should delay in between calls to queue methods by roughly the amount given at initialization" do
       @queue.message_delay = 0.5
       before = Time.now
-      one = @queue.message "destination", "message"
-      two = @queue.message "destination", "message"
-      one.join
-      two.join
+      @queue.message("destination", "message one", "message two").join
       after = Time.now
       # don't really like this, but it's working for now
       (after - before).should be_within(0.1).of(0.5)
+    end
+
+    it "should execute the block once for each message given" do
+      class << @queue
+        attr_reader :count
+        queue_method(:doit) { @count ||= 0; @count += 1 }
+      end
+
+      @queue.doit("destination", "message one", "message two", "message three").join
+      @queue.count.should eql(3)
     end
 
     it "should execute queued methods in the scope of an instance" do

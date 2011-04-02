@@ -20,7 +20,7 @@ module Rubot
 
     module MessageQueueMethodDefinition
       def queue_method(name, &block)
-        define_method name do |destination, messages|
+        define_method name do |destination, *messages|
           [*messages].flatten.each do |message|
             queue << { :block => block, :destination => destination, :message => message }
           end
