@@ -5,10 +5,14 @@ DB = Sequel.sqlite("db/development.db")
 
 module Rubot
   class Dispatcher
+    include Authorization
+
     def initialize(dir, config = {})
       @dir = dir
       @config = config
       @fc = config[:function_character] || '!'
+
+      config[:authorized_nicks].each { |nick| authorize nick } if config[:authorized_nicks]
 
       reload(false)
     end
@@ -50,7 +54,8 @@ module Rubot
       args = {
         :server => server,
         :dispatcher => self,
-        :message => message
+        :message => message,
+        :authorized => authorized?(message.from)
       }
 
       if controller = find_contoller(message)

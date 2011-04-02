@@ -41,5 +41,26 @@ module Rubot
         lambda { @commander.execute :test_instance_mehod }.should_not raise_error
       end
     end
+
+    describe "authorization" do
+      it "should allow authorized nick to execute protected command" do
+        commander = Class.new do
+          extend Commands
+          command(:locked_up_tight, :protected => true) {}
+        end
+
+        args = { :authorized => true }
+        lambda { commander.execute :locked_up_tight, args }.should_not raise_error
+      end
+
+      it "should not allow unauthorized nick to execute protected command" do
+        commander = Class.new do
+          extend Commands
+          command(:locked_up_tight, :protected => true) {}
+        end
+
+        lambda { commander.execute :locked_up_tight }.should raise_error(AuthorizationError)
+      end
+    end
   end
 end

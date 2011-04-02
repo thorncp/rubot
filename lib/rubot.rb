@@ -1,6 +1,7 @@
 module Rubot
   require "rubot/extensions"
   require "rubot/no_command_error"
+  require "rubot/authorization_error"
   require "rubot/controller"
   require "rubot/server"
   require "rubot/authorization"
