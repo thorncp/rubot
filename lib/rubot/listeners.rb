@@ -1,5 +1,10 @@
 module Rubot
   module Listeners
+    def init
+      super if defined?(super)
+      @listeners = []
+    end
+    
     def listener(options = {}, &block)
       options[:all] = true if options.empty?
       options[:block] = block

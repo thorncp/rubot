@@ -18,6 +18,10 @@ module Rubot
     end
 
     def reload(trigger_event = true)
+      if @controllers && @controllers.any?
+        @controllers.each(&:init)
+      end
+
       load_controllers
       load_resources
 
