@@ -3,6 +3,7 @@ module Rubot
   require "rubot/no_command_error"
   require "rubot/controller"
   require "rubot/server"
+  require "rubot/authorization"
   require "rubot/dispatcher"
   require "rubot/message"
   require "rubot/web_resource"
