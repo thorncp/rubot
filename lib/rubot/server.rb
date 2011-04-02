@@ -1,5 +1,7 @@
 module Rubot
   module Server
+    include MessageQueue
+
     attr_reader :connected_at
 
     def initialize(dispatcher, config)
@@ -38,7 +40,7 @@ module Rubot
       @config[:verbose]
     end
     
-    def message(destination, text)
+    queue_method :message do |destination, text|
       raw "PRIVMSG #{destination} :#{text}"
     end
     

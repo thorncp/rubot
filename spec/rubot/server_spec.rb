@@ -61,7 +61,7 @@ module Rubot
     describe "#message" do
       it "should send PRIVMSG command" do
         @server.should_receive(:raw).with("PRIVMSG #rubot :yo dawg")
-        @server.message("#rubot", "yo dawg")
+        @server.message("#rubot", "yo dawg").join # we join to make sure the thread finishes
       end
     end
   end
