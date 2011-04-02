@@ -21,7 +21,7 @@ module Rubot
     module MessageQueueMethodDefinition
       def queue_method(name, &block)
         define_method name do |destination, *messages|
-          [*messages].flatten.each do |message|
+          build_message_array(messages).each do |message|
             queue << { :block => block, :destination => destination, :message => message }
           end
           lock.synchronize do
@@ -40,6 +40,20 @@ module Rubot
         instance_exec(element[:destination], element[:message], &element[:block])
         sleep message_delay unless queue.empty?
       end
+    end
+
+    def string_to_irc_lines(str)
+      str.split(" ").inject([""]) do |arr, word|
+        arr.push("") if arr.last.size > 400
+        arr.last << "#{word} "
+        arr
+      end.map(&:strip)
+    end
+
+    def build_message_array(messages)
+      [*messages].each_with_index.map do |message, index|
+        message.size > 400 ? string_to_irc_lines(message) : messages[index]
+      end.flatten
     end
   end
 end
