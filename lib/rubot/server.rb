@@ -43,6 +43,10 @@ module Rubot
     queue_method :message do |destination, text|
       raw "PRIVMSG #{destination} :#{text}"
     end
+
+    queue_method :action do |destination, text|
+      raw "PRIVMSG #{destination} :\001ACTION #{text}\001"
+    end
     
     def nick
       @config[:nick]

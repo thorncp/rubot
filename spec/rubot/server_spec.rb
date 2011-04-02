@@ -64,5 +64,12 @@ module Rubot
         @server.message("#rubot", "yo dawg").join # we join to make sure the thread finishes
       end
     end
+
+    describe "#action" do
+      it "should send PRIVMSG command with ACTION flag" do
+        @server.should_receive(:raw).with("PRIVMSG #rubot :\001ACTION yo dawg\001")
+        @server.action("#rubot", "yo dawg").join # we join to make sure the thread finishes
+      end
+    end
   end
 end
