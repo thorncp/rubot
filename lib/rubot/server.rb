@@ -7,6 +7,7 @@ module Rubot
     def initialize(dispatcher, config)
       @dispatcher = dispatcher
       @config = config
+      @message_delay = config[:message_delay]
     end
     
     def connection_completed
