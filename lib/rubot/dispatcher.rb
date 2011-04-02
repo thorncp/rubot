@@ -63,7 +63,7 @@ module Rubot
     def find_contoller(message)
       if match = message.text.match(/^#{@fc}(\w+)( .*)?$/i)
         message.alias = match[1]
-        message.text.sub!("!#{match[1]}", "").strip!
+        message.text.sub!("#{@fc}#{match[1]}", "").strip!
         @controllers.find { |c| c.execute?(match[1]) }
       end
     end
