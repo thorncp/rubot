@@ -9,13 +9,15 @@ module Rubot
       @dir = dir
       @config = config
       @fc = config[:function_character] || '!'
-      
-      reload
+
+      reload(false)
     end
 
-    def reload
+    def reload(trigger_event = true)
       load_controllers
       load_resources
+
+      return unless trigger_event
 
       wrap_all(@controllers) do |controller|
         controller.trigger :reload, :dispatcher => self
