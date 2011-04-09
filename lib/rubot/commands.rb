@@ -1,8 +1,11 @@
 # todo: better name
 module Rubot
   module Commands
-    def command(name, options = {}, &block)
-      commands[name.to_s] = options.merge :block => block
+    def command(*names, &block)
+      options = names.extract_options!
+      names.each do |name|
+        commands[name.to_s] = options.merge :block => block
+      end
     end
   
     def commands

@@ -60,5 +60,16 @@ module Rubot
         lambda { @commander.execute :locked_up_tight }.should raise_error(AuthorizationError)
       end
     end
+
+    describe "aliases" do
+      it "should claim to be able to executed all command names in the definition" do
+        @commander.class_exec do
+          command(:one, :two) {}
+        end
+
+        @commander.should satisfy { |c| c.execute? :one }
+        @commander.should satisfy { |c| c.execute? :two }
+      end
+    end
   end
 end
