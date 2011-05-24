@@ -26,8 +26,9 @@ module Rubot
       before :each do
         @listener = Class.new do
           extend Listeners
+          define_method(:initialize) { |args| @args = args }
           listener(:matches => /o snap/) { @@derp = 42 }
-          listener(:matches => /what up (\w+)/) { @@derp = @matches[1] }
+          listener(:matches => /what up (\w+)/) { @@derp = @args[:matches][1] }
         end
       end
       

@@ -18,6 +18,7 @@ module Rubot
           # todo: refactor
           if listener[:matches]
             next unless matches = message.text.match(listener[:matches])
+            args.merge!(:matches => matches)
           end
           
           if listener[:from]
@@ -28,8 +29,8 @@ module Rubot
             next unless listener[:to] == message.to
           end
         end
+
         instance = self.new(args)
-        instance.instance_variable_set(:@matches, matches)
         instance.instance_exec(&listener[:block])
       end
     end

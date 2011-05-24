@@ -11,19 +11,17 @@ module Rubot
     def initialize(params)
       @params = params
     end
-    
-    def server
-      @params[:server]
+
+    def method_missing(sym, *args)
+      if @params.include? sym
+        @params[sym]
+      elsif @params.include? sym.to_s
+        @params[sym.to_s]
+      else
+        super
+      end
     end
-    
-    def message
-      @params[:message]
-    end
-    
-    def dispatcher
-      @params[:dispatcher]
-    end
-    
+
     def reply(text)
       destination = message.to == server.nick ? message.from : message.to
       server.message(destination, text)
