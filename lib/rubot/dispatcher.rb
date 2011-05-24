@@ -83,7 +83,7 @@ module Rubot
       Thread.new do
         begin
           block.call
-        rescue Exception => e
+        rescue StandardError => e
           # todo: proper logging
           puts "ERROR <#{e.class}>: #{e.message}"
           puts e.backtrace
