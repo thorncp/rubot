@@ -56,6 +56,11 @@ module Rubot
         @dispatcher.should_receive(:message_received).with(anything, message_with(from: "bob", to: "#rubot", text: "hi there!"))
         @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\s#rubot\s:hi there!")
       end
+      
+      it "should properly parse messages that have the same signature as IRC protocol messages" do
+        @dispatcher.should_receive(:message_received).with(anything, message_with(from: "bob", to: "#rubot", text: "!raw PRIVMSG #channel :derp"))
+        @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\s#rubot\s:!raw PRIVMSG #channel :derp")
+      end
     end
     
     describe "#message" do

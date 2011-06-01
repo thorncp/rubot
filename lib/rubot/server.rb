@@ -31,7 +31,7 @@ module Rubot
           raw "PONG :#{$1}"
         when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
           handle_meta($1, $2.to_i, $4)
-        when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+)\s:(.+)$/i
+        when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+?)\s:(.+)$/i
           message = Message.new(from: $1, to: $4, text: $5.strip)
           @dispatcher.message_received(self, message)
       end
