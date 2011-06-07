@@ -20,6 +20,8 @@ module Rubot
         end
       end
 
+      alias_method :controller_variables, :controller_variable
+
       def channel_variable(*vars)
         vars.each do |var|
           define_method(var) { chan_vars[message.to][var] }
@@ -27,12 +29,16 @@ module Rubot
         end
       end
 
+      alias_method :channel_variables, :channel_variable
+
       def nick_variable(*vars)
         vars.each do |var|
           define_method(var) { nick_vars[message.from][var] }
           define_method("#{var}=") { |val| nick_vars[message.from][var] = val }
         end
       end
+
+      alias_method :nick_variables, :nick_variable
     end
     
     module InstanceMethods
