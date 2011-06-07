@@ -21,9 +21,9 @@ module Rubot
       if @controllers && @controllers.any?
         @controllers.each(&:init)
       end
-
-      load_controllers
+      
       load_resources
+      load_controllers
 
       return unless trigger_event
 
