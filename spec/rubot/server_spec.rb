@@ -3,7 +3,7 @@ require "spec_helper"
 module Rubot
   describe Server do
     before :each do
-      config = { :nick => "rubot", :channels => ["#rubot", "#ruby"] }
+      config = { :nick => "rubot", :password => "derp", :channels => ["#rubot", "#ruby"] }
       @dispatcher = double
       @server = Class.new { include Server }.new(@dispatcher, config).as_null_object
     end
@@ -37,6 +37,11 @@ module Rubot
       
       it "should join all channels in config" do
         @server.should_receive(:raw).with("JOIN #rubot,#ruby").once
+        @server.connection_completed
+      end
+
+      it "should send password to server" do
+        @server.should_receive(:raw).with("PASS derp").once
         @server.connection_completed
       end
     end

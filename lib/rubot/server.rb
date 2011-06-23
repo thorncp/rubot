@@ -11,6 +11,7 @@ module Rubot
     end
     
     def connection_completed
+      raw "PASS #{@config[:password]}" if @config[:password]
       raw "USER" + " #{@config[:nick]}" * 4
       raw "NICK " + @config[:nick]
       raw "JOIN " + @config[:channels].join(",") if @config[:channels]
