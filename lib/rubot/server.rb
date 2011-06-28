@@ -18,7 +18,6 @@ module Rubot
     end
 
     def raw(msg)
-      # todo: need a queueing system with delay
       msg = msg.chomp + "\n"
       puts msg if verbose?
       send_data(msg)
