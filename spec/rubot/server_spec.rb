@@ -66,6 +66,16 @@ module Rubot
         @dispatcher.should_receive(:message_received).with(anything, message_with(from: "bob", to: "#rubot", text: "!raw PRIVMSG #channel :derp"))
         @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\s#rubot\s:!raw PRIVMSG #channel :derp")
       end
+
+      it "should properly flag private message" do
+        @dispatcher.should_receive(:message_received).with(anything, message_with(private_message?: true))
+        @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\srubot\s:hi rubot!")
+      end
+
+      it "should not flag channel message as private" do
+        @dispatcher.should_receive(:message_received).with(anything, message_with(private_message?: false))
+        @server.receive_data(":bob!BJohnson@12.34.56\sPRIVMSG\s#rubot\s:hi rubot!")
+      end
     end
     
     describe "#message" do

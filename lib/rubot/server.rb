@@ -32,7 +32,7 @@ module Rubot
         when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
           handle_meta($1, $2.to_i, $4)
         when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+?)\s:(.+)$/i
-          message = Message.new(from: $1, to: $4, text: $5.strip)
+          message = Message.new(from: $1, to: $4, text: $5.strip, private: $4 == nick)
           @dispatcher.message_received(self, message)
       end
     end
