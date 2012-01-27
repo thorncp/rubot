@@ -9,8 +9,8 @@ module Rubot
       @config = config
       @message_delay = config[:message_delay]
     end
-    
-    def connection_completed
+
+    def post_init
       raw "PASS #{@config[:password]}" if @config[:password]
       raw "USER" + " #{@config[:nick]}" * 4
       raw "NICK " + @config[:nick]
@@ -27,6 +27,8 @@ module Rubot
       puts data if verbose?
       
       case data
+        when /^ERROR/
+          reconnect @config["server"], @config["port"]
         when /^PING :(.+)$/i
           raw "PONG :#{$1}"
         when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
