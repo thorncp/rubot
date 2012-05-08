@@ -2,13 +2,13 @@ Rubot is a framework for creating an IRC bot.
  
 Installation
 ------------
-  gem install rubot
-  rubot new botname
-  cd botname
-  bundle install 
-  vim config.yml
-  bundle exec rubot server
-  nohup bundle exec rubot server & 
+    gem install rubot
+    rubot new botname
+    cd botname
+    bundle install 
+    vim config.yml
+    bundle exec rubot server
+    nohup bundle exec rubot server & 
  
 Usage
 -----
