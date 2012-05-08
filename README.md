@@ -19,7 +19,8 @@ listener or triggered a command.
 
 You can get the message sender's nick from `message.from` 
 
-* adding a command
+### adding a command
+
 ```ruby
 class WebLinkController < Rubot::Controller
   command :calc do
@@ -32,7 +33,8 @@ class WebLinkController < Rubot::Controller
 end
 ```
  
-* using listeners 
+### using listeners 
+
 ```ruby
 class SubstitutionsController < Rubot::Controller
   listener :matches => /hello/ do
@@ -41,7 +43,7 @@ class SubstitutionsController < Rubot::Controller
 end
 ```
  
-* adding resources
+### adding resources
 A resource is just a class or module that is a source of data. Resources are looked for
 in `APP_ROOT/resources`
 
@@ -53,7 +55,7 @@ module Google
 end
 ```
 
-* using `Rubot::WebResource`
+#### using `Rubot::WebResource`
 Rubot ships with a `Rubot::WebResource` class that can be subclassed to add simple
 web scraping functionality.
 
@@ -65,16 +67,17 @@ class Google < Rubot::WebResource
 end
 ```
 
-* generate a migration
+#### generate a migration
     rake db:migration migration_name
 
-* migrate the database
+#### migrate the database
     rake db:migrate
 
 NOTE: both the migrations and the sqlite database itself are stored
 within `APP_ROOT/db`
 
-* use database in a resource
+#### use database in a resource
+
 ```ruby
 class Fact < Sequel::Model
   def self.random
