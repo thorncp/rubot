@@ -99,9 +99,17 @@ where can I get more resources, commands, and listeners?
 --------------------------------------------------------
 
 http://github.com/mculp/rubot-listeners
+
 http://github.com/mculp/rubot-commands
+
 http://github.com/mculp/rubot-resources
  
 Future
 ------
 * incorporate some resources, commands, listeners as core configurable extensions/plugins? 
+
+Authors
+-------
+Chris Thorn (@thorncp)
+Matt Culpepper (@mculp)
+
