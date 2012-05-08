@@ -111,5 +111,6 @@ Future
 Authors
 -------
 Chris Thorn (@thorncp)
+
 Matt Culpepper (@mculp)
 
