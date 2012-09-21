@@ -95,14 +95,6 @@ why should I use rubot to build my IRC bot?
 1. provides a very simple DSL for quickly adding commands
 2. can update the application via git and reload  
 
-where can I get more resources, commands, and listeners?
---------------------------------------------------------
-
-http://github.com/mculp/rubot-listeners
-
-http://github.com/mculp/rubot-commands
-
-http://github.com/mculp/rubot-resources
  
 Future
 ------
