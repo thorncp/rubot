@@ -1,4 +1,4 @@
-Rubot is a framework for creating an IRC bot.  
+Rubot is a framework for creating IRC bots.  
  
 Installation
 ------------
