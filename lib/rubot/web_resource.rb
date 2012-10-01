@@ -15,7 +15,7 @@ module Rubot
       found = false
       until found
         res = Net::HTTP.get_response(URI.parse(url + query.to_s))
-        res.header['location'] && follow = true ? url = res.header['location'] : found = true
+        res.header['location'] && follow == true ? url = res.header['location'] : found = true
       end
       Nokogiri::HTML.parse Net::HTTP.get(res.body)
     end
