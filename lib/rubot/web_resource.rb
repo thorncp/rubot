@@ -17,7 +17,7 @@ module Rubot
         res = Net::HTTP.get_response(URI.parse(url + query.to_s))
         res.header['location'] && follow == true ? url = res.header['location'] : found = true
       end
-      Nokogiri::HTML.parse Net::HTTP.get(res.body)
+      Nokogiri::HTML.parse res.body
     end
 
     def self.get_url_follow(url, params={})
