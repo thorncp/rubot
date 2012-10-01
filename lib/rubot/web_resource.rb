@@ -10,9 +10,18 @@ module Rubot
       end
     end
 
-    def self.get_url(url, params = {})
+    def self.get_url(url, params = {}, follow = false)
       query = "?" + params.map { |k,v| "#{k}=#{CGI.escape(v)}" }.join("&") if params.any?
-      Nokogiri::HTML.parse Net::HTTP.get(URI.parse(url + query.to_s))
+      found = false
+      until found
+        res = Net::HTTP.get_response(URI.parse(url + query.to_s))
+        res.header['location'] && follow = true ? url = res.header['location'] : found = true
+      end
+      Nokogiri::HTML.parse Net::HTTP.get(res.body)
+    end
+
+    def self.get_url_follow(url, params={})
+      get_url(url, params, follow = true)
     end
   end
 end
