@@ -14,7 +14,11 @@ if ARGV[0] == "server"
 
   begin
     EventMachine::run do
-      EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
+      if config[:host]
+        EventMachine::bind_connect(config[:host], nil, config[:server], config[:port], Rubot::Server, dispatcher, config)
+      else
+        EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
+      end
     end
    rescue Interrupt
      dispatcher.quit
