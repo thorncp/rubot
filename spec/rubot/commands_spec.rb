@@ -4,6 +4,7 @@ module Rubot
   describe Commands do
     before :each do
       @commander = Class.new do
+        def initialize(*);end
         extend Commands
         command(:yo_dawg) { "sup" }
       end

@@ -11,6 +11,7 @@ module Rubot
     describe "no restrictions" do
       before :each do
         @listener = Class.new do
+          def initialize(*); end
           extend Listeners
           listener { @@derp = 42 }
         end
@@ -51,6 +52,7 @@ module Rubot
     describe "from" do
       before :each do
         @listener = Class.new do
+          def initialize(*); end
           extend Listeners
           listener(:from => "thorncp") { @@derp = 42 }
         end
@@ -70,6 +72,7 @@ module Rubot
     describe "to" do
       before :each do
         @listener = Class.new do
+          def initialize(*); end
           extend Listeners
           listener(:to => "#rubot") { @@derp = 42 }
         end
@@ -89,6 +92,7 @@ module Rubot
     describe "complex listener" do
       before :each do
         @listener = Class.new do
+          def initialize(*); end
           extend Listeners
           listener(:from => "thorncp", :to => "#rubot", :matches => /dude bro/) { @@derp = 42 }
         end

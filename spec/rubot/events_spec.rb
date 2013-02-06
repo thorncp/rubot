@@ -4,6 +4,7 @@ module Rubot
   describe Events do
     it "should trigger defined events and execute in the scope of an instance" do
       klass = Class.new do
+        def initialize(*); end
         extend Events
         on(:woot) { my_instance_method }
         define_method(:my_instance_method) {}
