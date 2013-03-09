@@ -4,13 +4,13 @@ module Rubot
       super if defined?(super)
       @listeners = []
     end
-    
+
     def listener(options = {}, &block)
       options[:all] = true if options.empty?
       options[:block] = block
       listeners << options
     end
-    
+
     def listen(message, args = {})
       listeners.each do |listener|
         # if :all, just go ahead and go
@@ -20,7 +20,7 @@ module Rubot
             next unless matches = message.text.match(listener[:matches])
             args.merge!(:matches => matches)
           end
-          
+
           if listener[:from]
             next unless listener[:from] == message.from
           end
@@ -34,7 +34,7 @@ module Rubot
         instance.instance_exec(&listener[:block])
       end
     end
-    
+
     def listeners
       @listeners ||= []
     end

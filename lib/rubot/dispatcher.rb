@@ -21,7 +21,7 @@ module Rubot
       if @controllers && @controllers.any?
         @controllers.each(&:init)
       end
-      
+
       load_resources
       load_controllers
 

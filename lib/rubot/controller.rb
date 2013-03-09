@@ -8,9 +8,9 @@ module Rubot
     extend Commands
     extend Listeners
     extend Events
-    
+
     include VariableHouse
-    
+
     def initialize(params)
       @params = params
     end

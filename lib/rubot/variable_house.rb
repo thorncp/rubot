@@ -40,13 +40,13 @@ module Rubot
 
       alias_method :nick_variables, :nick_variable
     end
-    
+
     module InstanceMethods
       %w{con chan nick}.each do |var|
         define_method("#{var}_vars") { self.class.send("#{var}_vars") }
       end
     end
-    
+
     def self.included(receiver)
       receiver.extend ClassMethods
       receiver.send :include, InstanceMethods

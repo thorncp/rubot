@@ -7,15 +7,15 @@ module Rubot
         commands[name.to_s] = options.merge :block => block
       end
     end
-  
+
     def commands
       @commands ||= {}
     end
-  
+
     def execute?(name)
       commands.include? name.to_s
     end
-  
+
     def execute(name, args = {})
       command = commands[name.to_s]
       raise NoCommandError, "#{name} is not implemented in #{self}" unless command

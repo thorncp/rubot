@@ -21,7 +21,7 @@ module Rubot
       @authorizer.deauthorize "thorncp"
       @authorizer.should_not satisfy { |a| a.authorized? "thorncp" }
     end
-    
+
     it "should not authorize nicks that have been removed after being added twice" do
       @authorizer.authorize "thorncp"
       @authorizer.authorize "thorncp"

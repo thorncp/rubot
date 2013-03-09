@@ -32,10 +32,10 @@ namespace :db do
   desc "generate a new migration"
   task :migration, :name do |t, args|
     raise "No name given" unless args[:name]
-    
+
     dir = File.join("db", "migrations")
     FileUtils.mkdir_p dir
-    
+
     stamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
     filename = File.join(dir, "#{stamp}_#{args[:name]}.rb")
 

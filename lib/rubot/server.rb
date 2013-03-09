@@ -25,24 +25,24 @@ module Rubot
 
     def receive_data(data)
       puts data if verbose?
-      
+
       case data
-        when /^ERROR/
-          reconnect @config["server"], @config["port"]
-        when /^PING :(.+)$/i
-          raw "PONG :#{$1}"
-        when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
-          handle_meta($1, $2.to_i, $4)
-        when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+?)\s:(.+)$/i
-          message = Message.new(from: $1, to: $4, text: $5.strip, private: $4 == nick)
-          @dispatcher.message_received(self, message)
+      when /^ERROR/
+        reconnect @config["server"], @config["port"]
+      when /^PING :(.+)$/i
+        raw "PONG :#{$1}"
+      when /^:([-.0-9a-z]+)\s([0-9]+)\s(.+)\s(.*)$/i
+        handle_meta($1, $2.to_i, $4)
+      when /^:(.+?)!(.+?)@(.+?)\sPRIVMSG\s(.+?)\s:(.+)$/i
+        message = Message.new(from: $1, to: $4, text: $5.strip, private: $4 == nick)
+        @dispatcher.message_received(self, message)
       end
     end
-    
+
     def verbose?
       @config[:verbose]
     end
-    
+
     queue_method :message do |destination, text|
       raw "PRIVMSG #{destination} :#{text}"
     end
@@ -50,7 +50,7 @@ module Rubot
     queue_method :action do |destination, text|
       raw "PRIVMSG #{destination} :\001ACTION #{text}\001"
     end
-    
+
     def nick
       @config[:nick]
     end

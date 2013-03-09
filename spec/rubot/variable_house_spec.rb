@@ -11,7 +11,7 @@ module Rubot
         def initialize(args = {})
           @message = Message.new(args)
         end
-        
+
         controller_variable :con
         channel_variable :chan
         nick_variable :nik
