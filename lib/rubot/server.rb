@@ -10,7 +10,7 @@ module Rubot
       @message_delay = config[:message_delay]
     end
 
-    def ssl_verify_peer
+    def ssl_verify_peer(pem)
       true
     end
 
