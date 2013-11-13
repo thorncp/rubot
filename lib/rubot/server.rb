@@ -10,7 +10,9 @@ module Rubot
       @message_delay = config[:message_delay]
     end
 
-    def post_init
+    def connection_completed
+      start_tls(verify_peer: true) if @config[:ssl]
+
       raw "PASS #{@config[:password]}" if @config[:password]
       raw "USER" + " #{@config[:nick]}" * 4
       raw "NICK " + @config[:nick]
