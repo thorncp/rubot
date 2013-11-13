@@ -10,6 +10,10 @@ module Rubot
       @message_delay = config[:message_delay]
     end
 
+    def ssl_verify_peer
+      true
+    end
+
     def connection_completed
       start_tls(verify_peer: true) if @config[:ssl]
 
