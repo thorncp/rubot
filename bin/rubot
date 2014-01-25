@@ -20,7 +20,7 @@ if ARGV[0] == "server"
         $conn = EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
       end
 
-      EventMachine.start_server "127.0.0.1", 8081, Rubot::CallbackHandler
+      EventMachine.start_server "0.0.0.0", 8081, Rubot::CallbackHandler
     end
    rescue Interrupt
      dispatcher.quit
