@@ -9,4 +9,5 @@ module Rubot
   require "rubot/dispatcher"
   require "rubot/message"
   require "rubot/web_resource"
+  require "rubot/callback_handler"
 end
