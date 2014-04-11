@@ -5,6 +5,7 @@ require "bundler/setup"
 require "rubot"
 require "eventmachine"
 require "yaml"
+require "fileutils"
 
 if ARGV[0] == "server"
   config = YAML.load_file("#{Dir.pwd}/config.yml").inject({}) { |h,p| h[p[0].intern] = p[1]; h }
@@ -23,6 +24,33 @@ if ARGV[0] == "server"
    rescue Interrupt
      dispatcher.quit
    end
+elsif ARGV[0] == "new"
+  if ARGV[1].nil?
+    $stderr.puts "no name given"
+    exit 1
+  end
+
+  bot_name = ARGV[1]
+
+  if Dir.exist? bot_name
+    $stderr.puts "directory '#{bot_name}' exists"
+    exit 1
+  end
+
+  template_dir = File.expand_path("../../lib/template", __FILE__)
+
+  Dir["#{template_dir}/**/*"].each do |template_file|
+    relative_path = template_file.sub(template_dir, "./#{bot_name}")
+    puts relative_path
+
+    unless Dir.exist?(File.dirname(relative_path))
+      FileUtils.mkdir_p File.dirname(relative_path)
+    end
+
+    unless File.directory?(relative_path)
+      FileUtils.cp_r template_file, relative_path
+    end
+  end
 else
   puts "wut"
 end

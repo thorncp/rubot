@@ -1,0 +1,10 @@
+---
+server: irc.freenode.net
+port: 6667
+nick: <my_rubot>
+verbose: true
+channels:
+  - "#rubot"
+authorized_nicks:
+  - <my_nick>
+message_delay: 1
