@@ -20,29 +20,29 @@ module Rubot
       end
     end
 
-    describe "#post_init" do
+    describe "#connection_completed" do
       before :each do
         @server.stub(:raw)
       end
 
       it "should send user info" do
         @server.should_receive(:raw).with("USER rubot rubot rubot rubot").once
-        @server.post_init
+        @server.connection_completed
       end
 
       it "should send nick info" do
         @server.should_receive(:raw).with("NICK rubot").once
-        @server.post_init
+        @server.connection_completed
       end
 
       it "should join all channels in config" do
         @server.should_receive(:raw).with("JOIN #rubot,#ruby").once
-        @server.post_init
+        @server.connection_completed
       end
 
       it "should send password to server" do
         @server.should_receive(:raw).with("PASS derp").once
-        @server.post_init
+        @server.connection_completed
       end
     end
 

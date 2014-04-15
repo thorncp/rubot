@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = "A Ruby Bot Framework for IRC"
   s.description = "A Ruby Bot Framework for IRC. More importantly, a project used to learn Ruby."
   
-  s.required_ruby_version = "~> 1.9.2"
+  s.required_ruby_version = ">= 1.9.2"
 
   s.rubyforge_project = "rubot"
   

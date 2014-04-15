@@ -3,3 +3,4 @@ pkg/*
 .bundle
 .rvmrc
 .rspec
+.ruby-version
