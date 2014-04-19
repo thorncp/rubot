@@ -1,39 +1,39 @@
-Rubot is a framework for creating IRC bots.  
- 
-Installation
-------------
+Rubot is a framework for creating IRC bots.
+
+## Installation
+
     gem install rubot
     rubot new botname
     cd botname
-    bundle install 
+    bundle install
     vim config.yml
     bundle exec rubot server
-    nohup bundle exec rubot server & 
- 
-Usage
------
 
-`Rubot::Controller` adds functionality to the class, namely the
-`message` method. `message` is an instance of the message that matched a
-listener or triggered a command. 
+## Usage
 
-You can get the message sender's nick from `message.from` 
+### Controllers
 
-### adding a command
+The `Rubot::Controller` class provides functionality to create commands, listen for messages, and subscribe to events. Within a command, listener, or event handler block, the `message` method gives access to the message that triggered the block to execute.
+
+You can get the message sender's nick from `message.from`
+
+Controllers are looked for in `APP_ROOT/controllers`, and are auto-required.
+
+#### Commands
 
 ```ruby
 class WebLinkController < Rubot::Controller
   command :calc do
     reply Google.calc(:q => message.text)
   end
-  
+
   command :google, :g do
     reply Google.lmgtfy_url_for(message.text)
   end
 end
 ```
- 
-### using listeners 
+
+#### Listeners
 
 ```ruby
 class SubstitutionsController < Rubot::Controller
@@ -42,10 +42,30 @@ class SubstitutionsController < Rubot::Controller
   end
 end
 ```
- 
-### adding resources
-A resource is just a class or module that is a source of data. Resources are looked for
-in `APP_ROOT/resources`
+
+#### Events
+
+```ruby
+class AdminController < Rubot::Controller
+  on :quit do
+    puts "totally caught the quit event!"
+  end
+
+  on :connect do
+    puts "totally caught the connect event!"
+  end
+
+  on :reload do
+    puts "totally caught the reload event!"
+  end
+end
+```
+
+### Resources
+
+A resource is just a class or module that is a source of data. Resources are looked for in `APP_ROOT/resources`, and are auto-required.
+
+#### Hi
 
 ```ruby
 module Google
@@ -55,9 +75,8 @@ module Google
 end
 ```
 
-#### using `Rubot::WebResource`
-Rubot ships with a `Rubot::WebResource` class that can be subclassed to add simple
-web scraping functionality.
+#### Web Resource
+Rubot ships with a `Rubot::WebResource` class that can be inherited to add simple web scraping functionality.
 
 ```ruby
 class Google < Rubot::WebResource
@@ -67,42 +86,34 @@ class Google < Rubot::WebResource
 end
 ```
 
-#### generate a migration
-    rake db:migration migration_name
+The `get` method will define a `calc` class method, whose parameters are expected to be a hash representing the query string that will be sent with the url.
 
-#### migrate the database
-    rake db:migrate
+```ruby
+Google.calc(q: "1 + 1")
+```
 
-NOTE: both the migrations and the sqlite database itself are stored
-within `APP_ROOT/db`
+### Data Storage
 
-#### use database in a resource
+Rubot uses a sqlite3 database that it will create for you in `APP_ROOT/db`. The framework itself does not utilize the database.
+
+#### Models
 
 ```ruby
 class Fact < Sequel::Model
   def self.random
-    # this is a pretty shitty way of getting a random record
     DB["select * from facts order by random() limit 1"].first
   end
 end
 ```
 
-now `Fact.random` can be used from a controller
+Now `Fact.random` can be used from a controller.
 
-why should I use rubot to build my IRC bot?
--------------------------------------------
+## Future
 
-1. provides a very simple DSL for quickly adding commands
-2. can update the application via git and reload  
+* tests would be good
+* extract the irc part so that the server protocol is interchangeable? e.g. support for slack/campfire/etc
+* incorporate some resources, commands, listeners as core configurable extensions/plugins?
 
- 
-Future
-------
-* incorporate some resources, commands, listeners as core configurable extensions/plugins? 
+## Contributors
 
-Authors
--------
-Chris Thorn (@thorncp)
-
-Matt Culpepper (@mculp)
-
+https://github.com/thorncp/rubot/graphs/contributors
