@@ -10,16 +10,18 @@ require "fileutils"
 if ARGV[0] == "server"
   config = YAML.load_file("#{Dir.pwd}/config.yml").inject({}) { |h,p| h[p[0].intern] = p[1]; h }
   config[:port] ||= 6667
-  
+
   dispatcher = Rubot::Dispatcher.new(Dir.pwd, config)
 
   begin
     EventMachine::run do
       if config[:host]
-        EventMachine::bind_connect(config[:host], nil, config[:server], config[:port], Rubot::Server, dispatcher, config)
+        $conn = EventMachine::bind_connect(config[:host], nil, config[:server], config[:port], Rubot::Server, dispatcher, config)
       else
-        EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
+        $conn = EventMachine::connect(config[:server], config[:port], Rubot::Server, dispatcher, config)
       end
+
+      EventMachine.start_server "0.0.0.0", 8081, Rubot::CallbackHandler
     end
    rescue Interrupt
      dispatcher.quit
